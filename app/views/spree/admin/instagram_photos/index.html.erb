@@ -1,0 +1,28 @@
+<% content_for :page_title do %>
+  Instagram Photos Tagged: <%= Spree::InstagramTag.active_tag_names.join(", ") %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= link_to "Check For New Photos", admin_check_for_new_path, class: "button icon-plus", icon: "icon-plus" %>
+  </li>
+<% end %>
+
+<%= render :partial => 'spree/admin/shared/instagram_sub_menu' %>
+
+<div>
+  <% @photos.each do |photo| %>
+    <div class="instagram-photo <%= photo.approved ? 'approved' : 'awaiting-approval' %>">
+      <%= image_tag photo.url %><br />
+      <div class="instagram-tag">#<%= photo.instagram_tag.name %></div>
+      <div class="photo-options">
+        <% if photo.approved %>
+          <%= link_to "Remove", '#', :"data-url" => revoke_photo_path(photo), class: "approve-or-remove" %>
+        <% else %>
+          <%= link_to "Approve", '#', :"data-url" => approve_photo_path(photo), class: "approve-or-remove" %>
+        <% end %>
+        <%= link_to "Reject", '#', :"data-url" => reject_photo_path(photo), class: "reject-photo" %>
+      </div>
+    </div>
+  <% end %>
+</div>

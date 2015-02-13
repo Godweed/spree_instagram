@@ -1,0 +1,6 @@
+class AddProfileToInstagramPhotos < ActiveRecord::Migration
+  def change
+    add_column :spree_instagram_photos, :profile, :boolean, default: false
+  end
+ 
+end
